@@ -1,5 +1,5 @@
 //
-// MeditationsUITests.swift
+// TopicsRouter.swift
 //
 // Copyright © 2021 Ten Percent Happier. All rights reserved.
 //
@@ -37,38 +37,48 @@
 //     the implied warranties of merchantability, fitness for a particular purpose and non-infringement.
 //
 
-import XCTest
+import UIKit
 
-class MeditationsUITests: XCTestCase {
+@objc protocol TopicsRoutingLogic {
+  func routeToMeditations(segue: UIStoryboardSegue?)
+}
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+protocol TopicsDataPassing {
+  var dataStore: TopicsDataStore? { get }
+}
 
-        // In UI tests it is usually best to stop immediately when a failure occurs.
-        continueAfterFailure = false
+class TopicsRouter: NSObject, TopicsRoutingLogic, TopicsDataPassing {
 
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
+  weak var viewController: TopicsViewController?
+  var dataStore: TopicsDataStore?
+
+  // MARK: Routing
+
+  func routeToMeditations(segue: UIStoryboardSegue?) {
+    if let segue = segue {
+      let destinationVC = segue.destination as! MeditationsViewController
+      var destinationDS = destinationVC.router!.dataStore!
+      passDataToMeditations(source: dataStore!, destination: &destinationDS)
+    } else {
+      let storyboard = UIStoryboard(name: "Main", bundle: nil)
+      let destinationVC = storyboard.instantiateViewController(withIdentifier: "MeditationsViewController") as! MeditationsViewController
+      var destinationDS = destinationVC.router!.dataStore!
+      passDataToMeditations(source: dataStore!, destination: &destinationDS)
+      navigateToMeditations(source: viewController!, destination: destinationVC)
     }
+  }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
+  // MARK: Navigation
 
-    func testExample() throws {
-        // UI tests must launch the application that they test.
-        let app = XCUIApplication()
-        app.launch()
+  func navigateToMeditations(source: TopicsViewController, destination: MeditationsViewController) {
+    source.show(destination, sender: nil)
+  }
 
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
+  // MARK: Passing data
 
-    func testLaunchPerformance() throws {
-        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, *) {
-            // This measures how long it takes to launch your application.
-            measure(metrics: [XCTApplicationLaunchMetric()]) {
-                XCUIApplication().launch()
-            }
-        }
-    }
+  func passDataToMeditations(source: TopicsDataStore, destination: inout MeditationsDataStore) {
+    let selectedSection = viewController?.tableView.indexPathForSelectedRow?.section
+    destination.topic = source.topics?[selectedSection!]
+    destination.topicIndex = selectedSection
+  }
 }

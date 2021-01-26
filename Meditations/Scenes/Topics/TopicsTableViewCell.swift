@@ -1,5 +1,5 @@
 //
-// MeditationsUITests.swift
+// TopicsTableViewCell.swift
 //
 // Copyright © 2021 Ten Percent Happier. All rights reserved.
 //
@@ -37,38 +37,65 @@
 //     the implied warranties of merchantability, fitness for a particular purpose and non-infringement.
 //
 
-import XCTest
+import UIKit
 
-class MeditationsUITests: XCTestCase {
+class TopicsTableViewCell: UITableViewCell {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+  // MARK: Content
 
-        // In UI tests it is usually best to stop immediately when a failure occurs.
-        continueAfterFailure = false
-
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
+  var displayedTopic: Topic! {
+    didSet {
+      self.textLabel?.text = displayedTopic.title
+      self.detailTextLabel?.text = displayedTopic.subtitle
+      self.colorThumbnail.backgroundColor = displayedTopic.color
     }
+  }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
+  // MARK: UIViews
 
-    func testExample() throws {
-        // UI tests must launch the application that they test.
-        let app = XCUIApplication()
-        app.launch()
+  private let colorThumbnail: UIView = {
+    $0.backgroundColor = .systemFill // default color
+    return $0
+  }(UIView())
 
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
+  // MARK: View lifecycle
 
-    func testLaunchPerformance() throws {
-        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, *) {
-            // This measures how long it takes to launch your application.
-            measure(metrics: [XCTApplicationLaunchMetric()]) {
-                XCUIApplication().launch()
-            }
-        }
-    }
+  override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+    super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
+    setup()
+  }
+
+  required init?(coder: NSCoder) {
+    super.init(coder: coder)
+    setup()
+  }
+
+  override func layoutSubviews() {
+    super.layoutSubviews()
+
+    // Adjust border attributes
+    self.layer.borderColor = UIColor.systemFill.cgColor
+    self.layer.borderWidth = 1.0
+    self.layer.cornerRadius = 3.0
+  }
+
+  // MARK: Setup
+
+  private func setup() {
+    // Adjust label attributes
+    self.textLabel?.font = .boldSystemFont(ofSize: 18.0)
+    self.textLabel?.textColor = .label
+    self.detailTextLabel?.font = .systemFont(ofSize: 13.0)
+    self.detailTextLabel?.textColor = .secondaryLabel
+
+    // Adjust thumbnail contraints
+    self.contentView.addSubview(colorThumbnail)
+    _ = colorThumbnail.anchor(top: self.topAnchor,
+                              left: self.leftAnchor,
+                              bottom: self.bottomAnchor,
+                              topConstant: 0,
+                              leftConstant: 0,
+                              bottomConstant: 0,
+                              widthConstant: 12)
+  }
 }

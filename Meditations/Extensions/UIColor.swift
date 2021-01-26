@@ -1,5 +1,5 @@
 //
-// MeditationsUITests.swift
+// UIColor.swift
 //
 // Copyright © 2021 Ten Percent Happier. All rights reserved.
 //
@@ -37,38 +37,40 @@
 //     the implied warranties of merchantability, fitness for a particular purpose and non-infringement.
 //
 
-import XCTest
+import UIKit.UIColor
 
-class MeditationsUITests: XCTestCase {
+// MARK: Convert a HEX code string to a UIColor
+// Credit: https://cocoacasts.com/from-hex-to-uicolor-and-back-in-swift/
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+extension UIColor {
 
-        // In UI tests it is usually best to stop immediately when a failure occurs.
-        continueAfterFailure = false
+  convenience init?(hex: String) {
+    var hexSanitized = hex.trimmingCharacters(in: .whitespacesAndNewlines)
+    hexSanitized = hexSanitized.replacingOccurrences(of: "#", with: "")
 
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
+    var red: CGFloat = 0.0
+    var green: CGFloat = 0.0
+    var blue: CGFloat = 0.0
+    var alpha: CGFloat = 1.0
+
+    let length = hexSanitized.count
+
+    guard let rgb: UInt64 = Scanner(string: hexSanitized)
+            .scanUInt64(representation: .hexadecimal) else { return nil }
+
+    if length == 6 {
+      red = CGFloat((rgb & 0xFF0000) >> 16) / 255.0
+      green = CGFloat((rgb & 0x00FF00) >> 8) / 255.0
+      blue = CGFloat(rgb & 0x0000FF) / 255.0
+    } else if length == 8 {
+      red = CGFloat((rgb & 0xFF000000) >> 24) / 255.0
+      green = CGFloat((rgb & 0x00FF0000) >> 16) / 255.0
+      blue = CGFloat((rgb & 0x0000FF00) >> 8) / 255.0
+      alpha = CGFloat(rgb & 0x000000FF) / 255.0
+    } else {
+      return nil
     }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() throws {
-        // UI tests must launch the application that they test.
-        let app = XCUIApplication()
-        app.launch()
-
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testLaunchPerformance() throws {
-        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, *) {
-            // This measures how long it takes to launch your application.
-            measure(metrics: [XCTApplicationLaunchMetric()]) {
-                XCUIApplication().launch()
-            }
-        }
-    }
+    self.init(red: red, green: green, blue: blue, alpha: alpha)
+  }
 }

@@ -1,5 +1,5 @@
 //
-// MeditationsUITests.swift
+// UIImageView.swift
 //
 // Copyright © 2021 Ten Percent Happier. All rights reserved.
 //
@@ -37,38 +37,51 @@
 //     the implied warranties of merchantability, fitness for a particular purpose and non-infringement.
 //
 
-import XCTest
+import UIKit.UIImageView
 
-class MeditationsUITests: XCTestCase {
+// MARK: Async image loading from cache
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+extension UIImageView {
 
-        // In UI tests it is usually best to stop immediately when a failure occurs.
-        continueAfterFailure = false
+  func downloadFrom(urlString: String, contentMode mode: UIView.ContentMode) {
+    let cache = ImageCache.publicCache
 
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
-    }
+    self.contentMode = mode
+    self.image = cache.placeholderImage
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() throws {
-        // UI tests must launch the application that they test.
-        let app = XCUIApplication()
-        app.launch()
-
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testLaunchPerformance() throws {
-        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, *) {
-            // This measures how long it takes to launch your application.
-            measure(metrics: [XCTApplicationLaunchMetric()]) {
-                XCUIApplication().launch()
-            }
+    if let url = NSURL(string: urlString) {
+      cache.load(url: url) { image in
+        if let image = image {
+          let resizedImage = self.resizeImage(image: image, targetSize: self.frame.size)
+          self.image = resizedImage
         }
+      }
     }
+  }
+
+  private func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage? {
+    let size = image.size
+
+    let widthRatio  = targetSize.width  / size.width
+    let heightRatio = targetSize.height / size.height
+
+    // Figure out what our orientation is, and use that to form the rectangle
+    var newSize: CGSize
+    if widthRatio > heightRatio {
+      newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
+    } else {
+      newSize = CGSize(width: size.width * widthRatio, height: size.height * widthRatio)
+    }
+
+    // This is the rect that we've calculated out and this is what is actually used below
+    let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
+
+    // Actually do the resizing to the rect using the ImageContext stuff
+    UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
+    image.draw(in: rect)
+    let newImage = UIGraphicsGetImageFromCurrentImageContext()
+    UIGraphicsEndImageContext()
+
+    return newImage
+  }
 }

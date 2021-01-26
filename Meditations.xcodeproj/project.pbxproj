@@ -7,14 +7,40 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4288E83425BEE0DE00504998 /* HttpService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4288E83325BEE0DE00504998 /* HttpService.swift */; };
+		42917F9125BD6FB4008F453B /* DecodingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42917F9025BD6FB4008F453B /* DecodingError.swift */; };
+		42917F9625BE127D008F453B /* TopicsBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42917F9525BE127D008F453B /* TopicsBuilder.swift */; };
+		42A3A45E25BE61B00063C1B7 /* FailableDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A3A45D25BE61B00063C1B7 /* FailableDecodable.swift */; };
+		42A52D4E25BEC35700F12B87 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A52D4D25BEC35700F12B87 /* ImageCache.swift */; };
+		42A52D5425BEC5C700F12B87 /* NetworkingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A52D5325BEC5C700F12B87 /* NetworkingError.swift */; };
 		42B0A94525BBA31600E31730 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B0A94425BBA31600E31730 /* AppDelegate.swift */; };
 		42B0A94725BBA31600E31730 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B0A94625BBA31600E31730 /* SceneDelegate.swift */; };
-		42B0A94925BBA31600E31730 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B0A94825BBA31600E31730 /* ViewController.swift */; };
 		42B0A94C25BBA31600E31730 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42B0A94A25BBA31600E31730 /* Main.storyboard */; };
 		42B0A94E25BBA31800E31730 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42B0A94D25BBA31800E31730 /* Assets.xcassets */; };
 		42B0A95125BBA31800E31730 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42B0A94F25BBA31800E31730 /* LaunchScreen.storyboard */; };
 		42B0A95C25BBA31800E31730 /* MeditationsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B0A95B25BBA31800E31730 /* MeditationsTests.swift */; };
 		42B0A96725BBA31800E31730 /* MeditationsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B0A96625BBA31800E31730 /* MeditationsUITests.swift */; };
+		42B0A97F25BBA37800E31730 /* TopicsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B0A97925BBA37800E31730 /* TopicsPresenter.swift */; };
+		42B0A98125BBA37800E31730 /* TopicsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B0A97B25BBA37800E31730 /* TopicsRouter.swift */; };
+		42B0A98225BBA37800E31730 /* TopicsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B0A97C25BBA37800E31730 /* TopicsModels.swift */; };
+		42B0A98325BBA37800E31730 /* TopicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B0A97D25BBA37800E31730 /* TopicsViewController.swift */; };
+		42B0A98425BBA37800E31730 /* TopicsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B0A97E25BBA37800E31730 /* TopicsInteractor.swift */; };
+		42B0A9AB25BBAFC900E31730 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B0A9AA25BBAFC900E31730 /* UIColor.swift */; };
+		42B0A9D425BBF71A00E31730 /* Topic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B0A9D325BBF71A00E31730 /* Topic.swift */; };
+		42B0A9D925BBF74100E31730 /* Subtopic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B0A9D825BBF74100E31730 /* Subtopic.swift */; };
+		42B0A9DE25BC061F00E31730 /* Meditation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B0A9DD25BC061F00E31730 /* Meditation.swift */; };
+		42B0A9F325BC27EB00E31730 /* TopicsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B0A9F225BC27EB00E31730 /* TopicsTableViewCell.swift */; };
+		42B0AA1125BCCB1200E31730 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B0AA1025BCCB1200E31730 /* UIView.swift */; };
+		42B0AA1F25BCEA2000E31730 /* MeditationsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B0AA1925BCEA2000E31730 /* MeditationsPresenter.swift */; };
+		42B0AA2125BCEA2000E31730 /* MeditationsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B0AA1B25BCEA2000E31730 /* MeditationsRouter.swift */; };
+		42B0AA2225BCEA2000E31730 /* MeditationsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B0AA1C25BCEA2000E31730 /* MeditationsModels.swift */; };
+		42B0AA2325BCEA2000E31730 /* MeditationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B0AA1D25BCEA2000E31730 /* MeditationsViewController.swift */; };
+		42B0AA2425BCEA2000E31730 /* MeditationsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B0AA1E25BCEA2000E31730 /* MeditationsInteractor.swift */; };
+		42B0AA2C25BCEB2700E31730 /* MeditationsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B0AA2B25BCEB2700E31730 /* MeditationsTableViewCell.swift */; };
+		42BE252425BF5BE000AD4CAB /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BE252325BF5BE000AD4CAB /* UILabel.swift */; };
+		42BE253925BF838100AD4CAB /* ImageUrlProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BE253825BF838100AD4CAB /* ImageUrlProtocol.swift */; };
+		42BE254A25BFBF5500AD4CAB /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BE254925BFBF5500AD4CAB /* UIImageView.swift */; };
+		42DBC7A725BFD22900F6F0D2 /* MeditationTopicsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DBC7A625BFD22900F6F0D2 /* MeditationTopicsWorker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,10 +61,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4288E83325BEE0DE00504998 /* HttpService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpService.swift; sourceTree = "<group>"; };
+		42917F9025BD6FB4008F453B /* DecodingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodingError.swift; sourceTree = "<group>"; };
+		42917F9525BE127D008F453B /* TopicsBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicsBuilder.swift; sourceTree = "<group>"; };
+		42A3A45D25BE61B00063C1B7 /* FailableDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FailableDecodable.swift; sourceTree = "<group>"; };
+		42A52D4D25BEC35700F12B87 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
+		42A52D5325BEC5C700F12B87 /* NetworkingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingError.swift; sourceTree = "<group>"; };
 		42B0A94125BBA31600E31730 /* Meditations.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Meditations.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42B0A94425BBA31600E31730 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		42B0A94625BBA31600E31730 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		42B0A94825BBA31600E31730 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		42B0A94B25BBA31600E31730 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		42B0A94D25BBA31800E31730 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		42B0A95025BBA31800E31730 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -49,6 +80,29 @@
 		42B0A96225BBA31800E31730 /* MeditationsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MeditationsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		42B0A96625BBA31800E31730 /* MeditationsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeditationsUITests.swift; sourceTree = "<group>"; };
 		42B0A96825BBA31800E31730 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		42B0A97925BBA37800E31730 /* TopicsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicsPresenter.swift; sourceTree = "<group>"; };
+		42B0A97B25BBA37800E31730 /* TopicsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicsRouter.swift; sourceTree = "<group>"; };
+		42B0A97C25BBA37800E31730 /* TopicsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicsModels.swift; sourceTree = "<group>"; };
+		42B0A97D25BBA37800E31730 /* TopicsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicsViewController.swift; sourceTree = "<group>"; };
+		42B0A97E25BBA37800E31730 /* TopicsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicsInteractor.swift; sourceTree = "<group>"; };
+		42B0A9AA25BBAFC900E31730 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		42B0A9B925BBDF5700E31730 /* LICENSE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
+		42B0A9BD25BBDF7800E31730 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		42B0A9D325BBF71A00E31730 /* Topic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Topic.swift; sourceTree = "<group>"; };
+		42B0A9D825BBF74100E31730 /* Subtopic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subtopic.swift; sourceTree = "<group>"; };
+		42B0A9DD25BC061F00E31730 /* Meditation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meditation.swift; sourceTree = "<group>"; };
+		42B0A9F225BC27EB00E31730 /* TopicsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicsTableViewCell.swift; sourceTree = "<group>"; };
+		42B0AA1025BCCB1200E31730 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
+		42B0AA1925BCEA2000E31730 /* MeditationsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeditationsPresenter.swift; sourceTree = "<group>"; };
+		42B0AA1B25BCEA2000E31730 /* MeditationsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeditationsRouter.swift; sourceTree = "<group>"; };
+		42B0AA1C25BCEA2000E31730 /* MeditationsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeditationsModels.swift; sourceTree = "<group>"; };
+		42B0AA1D25BCEA2000E31730 /* MeditationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeditationsViewController.swift; sourceTree = "<group>"; };
+		42B0AA1E25BCEA2000E31730 /* MeditationsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeditationsInteractor.swift; sourceTree = "<group>"; };
+		42B0AA2B25BCEB2700E31730 /* MeditationsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeditationsTableViewCell.swift; sourceTree = "<group>"; };
+		42BE252325BF5BE000AD4CAB /* UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
+		42BE253825BF838100AD4CAB /* ImageUrlProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUrlProtocol.swift; sourceTree = "<group>"; };
+		42BE254925BFBF5500AD4CAB /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
+		42DBC7A625BFD22900F6F0D2 /* MeditationTopicsWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeditationTopicsWorker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,9 +130,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		42A3A47125BEABAE0063C1B7 /* DecodingUtility */ = {
+			isa = PBXGroup;
+			children = (
+				42917F9025BD6FB4008F453B /* DecodingError.swift */,
+				42A3A45D25BE61B00063C1B7 /* FailableDecodable.swift */,
+			);
+			path = DecodingUtility;
+			sourceTree = "<group>";
+		};
+		42A52D5225BEC5A900F12B87 /* NetworkUtility */ = {
+			isa = PBXGroup;
+			children = (
+				42A52D5325BEC5C700F12B87 /* NetworkingError.swift */,
+			);
+			path = NetworkUtility;
+			sourceTree = "<group>";
+		};
 		42B0A93825BBA31600E31730 = {
 			isa = PBXGroup;
 			children = (
+				42B0A9BD25BBDF7800E31730 /* README.md */,
+				42B0A9B925BBDF5700E31730 /* LICENSE.md */,
 				42B0A94325BBA31600E31730 /* Meditations */,
 				42B0A95A25BBA31800E31730 /* MeditationsTests */,
 				42B0A96525BBA31800E31730 /* MeditationsUITests */,
@@ -99,13 +172,17 @@
 		42B0A94325BBA31600E31730 /* Meditations */ = {
 			isa = PBXGroup;
 			children = (
-				42B0A94425BBA31600E31730 /* AppDelegate.swift */,
-				42B0A94625BBA31600E31730 /* SceneDelegate.swift */,
-				42B0A94825BBA31600E31730 /* ViewController.swift */,
-				42B0A94A25BBA31600E31730 /* Main.storyboard */,
 				42B0A94D25BBA31800E31730 /* Assets.xcassets */,
 				42B0A94F25BBA31800E31730 /* LaunchScreen.storyboard */,
+				42B0A94A25BBA31600E31730 /* Main.storyboard */,
 				42B0A95225BBA31800E31730 /* Info.plist */,
+				42B0A94425BBA31600E31730 /* AppDelegate.swift */,
+				42B0A94625BBA31600E31730 /* SceneDelegate.swift */,
+				42B0A9A925BBAFB700E31730 /* Extensions */,
+				42B0A9BE25BBE05600E31730 /* Models */,
+				42B0A9B525BBDEEB00E31730 /* Scenes */,
+				42B0A9C025BBE06300E31730 /* Services */,
+				42B0A9BF25BBE05C00E31730 /* Workers */,
 			);
 			path = Meditations;
 			sourceTree = "<group>";
@@ -128,6 +205,83 @@
 			path = MeditationsUITests;
 			sourceTree = "<group>";
 		};
+		42B0A97725BBA32800E31730 /* Topics */ = {
+			isa = PBXGroup;
+			children = (
+				42B0A9F225BC27EB00E31730 /* TopicsTableViewCell.swift */,
+				42B0A97D25BBA37800E31730 /* TopicsViewController.swift */,
+				42B0A97E25BBA37800E31730 /* TopicsInteractor.swift */,
+				42B0A97925BBA37800E31730 /* TopicsPresenter.swift */,
+				42B0A97B25BBA37800E31730 /* TopicsRouter.swift */,
+				42B0A97C25BBA37800E31730 /* TopicsModels.swift */,
+			);
+			path = Topics;
+			sourceTree = "<group>";
+		};
+		42B0A9A925BBAFB700E31730 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				42B0A9AA25BBAFC900E31730 /* UIColor.swift */,
+				42B0AA1025BCCB1200E31730 /* UIView.swift */,
+				42BE252325BF5BE000AD4CAB /* UILabel.swift */,
+				42BE254925BFBF5500AD4CAB /* UIImageView.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		42B0A9B525BBDEEB00E31730 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				42B0A97725BBA32800E31730 /* Topics */,
+				42B0AA1825BCEA0500E31730 /* Meditations */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		42B0A9BE25BBE05600E31730 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				42A52D5225BEC5A900F12B87 /* NetworkUtility */,
+				42A3A47125BEABAE0063C1B7 /* DecodingUtility */,
+				42917F9525BE127D008F453B /* TopicsBuilder.swift */,
+				42B0A9D325BBF71A00E31730 /* Topic.swift */,
+				42B0A9D825BBF74100E31730 /* Subtopic.swift */,
+				42B0A9DD25BC061F00E31730 /* Meditation.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		42B0A9BF25BBE05C00E31730 /* Workers */ = {
+			isa = PBXGroup;
+			children = (
+				42DBC7A625BFD22900F6F0D2 /* MeditationTopicsWorker.swift */,
+			);
+			path = Workers;
+			sourceTree = "<group>";
+		};
+		42B0A9C025BBE06300E31730 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				42A52D4D25BEC35700F12B87 /* ImageCache.swift */,
+				42BE253825BF838100AD4CAB /* ImageUrlProtocol.swift */,
+				4288E83325BEE0DE00504998 /* HttpService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		42B0AA1825BCEA0500E31730 /* Meditations */ = {
+			isa = PBXGroup;
+			children = (
+				42B0AA2B25BCEB2700E31730 /* MeditationsTableViewCell.swift */,
+				42B0AA1D25BCEA2000E31730 /* MeditationsViewController.swift */,
+				42B0AA1E25BCEA2000E31730 /* MeditationsInteractor.swift */,
+				42B0AA1925BCEA2000E31730 /* MeditationsPresenter.swift */,
+				42B0AA1B25BCEA2000E31730 /* MeditationsRouter.swift */,
+				42B0AA1C25BCEA2000E31730 /* MeditationsModels.swift */,
+			);
+			path = Meditations;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -135,6 +289,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 42B0A96B25BBA31800E31730 /* Build configuration list for PBXNativeTarget "Meditations" */;
 			buildPhases = (
+				42B0A9A525BBA52A00E31730 /* ShellScript */,
 				42B0A93D25BBA31600E31730 /* Sources */,
 				42B0A93E25BBA31600E31730 /* Frameworks */,
 				42B0A93F25BBA31600E31730 /* Resources */,
@@ -253,14 +408,60 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		42B0A9A525BBA52A00E31730 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		42B0A93D25BBA31600E31730 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				42B0A94925BBA31600E31730 /* ViewController.swift in Sources */,
+				42DBC7A725BFD22900F6F0D2 /* MeditationTopicsWorker.swift in Sources */,
+				42B0AA2125BCEA2000E31730 /* MeditationsRouter.swift in Sources */,
+				42B0A98125BBA37800E31730 /* TopicsRouter.swift in Sources */,
+				42B0A9AB25BBAFC900E31730 /* UIColor.swift in Sources */,
+				42B0A9DE25BC061F00E31730 /* Meditation.swift in Sources */,
+				42BE252425BF5BE000AD4CAB /* UILabel.swift in Sources */,
+				42A52D5425BEC5C700F12B87 /* NetworkingError.swift in Sources */,
+				42B0A9F325BC27EB00E31730 /* TopicsTableViewCell.swift in Sources */,
+				42A3A45E25BE61B00063C1B7 /* FailableDecodable.swift in Sources */,
+				42B0A98225BBA37800E31730 /* TopicsModels.swift in Sources */,
+				42B0AA2C25BCEB2700E31730 /* MeditationsTableViewCell.swift in Sources */,
+				42B0AA1F25BCEA2000E31730 /* MeditationsPresenter.swift in Sources */,
 				42B0A94525BBA31600E31730 /* AppDelegate.swift in Sources */,
+				42A52D4E25BEC35700F12B87 /* ImageCache.swift in Sources */,
+				42B0A9D425BBF71A00E31730 /* Topic.swift in Sources */,
+				42B0A98425BBA37800E31730 /* TopicsInteractor.swift in Sources */,
+				42917F9125BD6FB4008F453B /* DecodingError.swift in Sources */,
+				42BE254A25BFBF5500AD4CAB /* UIImageView.swift in Sources */,
+				4288E83425BEE0DE00504998 /* HttpService.swift in Sources */,
+				42B0AA1125BCCB1200E31730 /* UIView.swift in Sources */,
+				42B0A97F25BBA37800E31730 /* TopicsPresenter.swift in Sources */,
+				42B0AA2425BCEA2000E31730 /* MeditationsInteractor.swift in Sources */,
+				42B0AA2325BCEA2000E31730 /* MeditationsViewController.swift in Sources */,
+				42B0A9D925BBF74100E31730 /* Subtopic.swift in Sources */,
+				42B0A98325BBA37800E31730 /* TopicsViewController.swift in Sources */,
+				42917F9625BE127D008F453B /* TopicsBuilder.swift in Sources */,
+				42BE253925BF838100AD4CAB /* ImageUrlProtocol.swift in Sources */,
 				42B0A94725BBA31600E31730 /* SceneDelegate.swift in Sources */,
+				42B0AA2225BCEA2000E31730 /* MeditationsModels.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

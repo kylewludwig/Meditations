@@ -1,5 +1,5 @@
 //
-// MeditationsUITests.swift
+// ImageUrlProtocol.swift
 //
 // Copyright © 2021 Ten Percent Happier. All rights reserved.
 //
@@ -37,38 +37,59 @@
 //     the implied warranties of merchantability, fitness for a particular purpose and non-infringement.
 //
 
-import XCTest
+import Foundation
 
-class MeditationsUITests: XCTestCase {
+class ImageUrlProtocol: URLProtocol {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+  var cancelledOrComplete: Bool = false
+  var block: DispatchWorkItem!
 
-        // In UI tests it is usually best to stop immediately when a failure occurs.
-        continueAfterFailure = false
+  private static let queue = OS_dispatch_queue_serial(label: "com.tenpercent.imageLoaderURLProtocol")
+  
+  override class func canInit(with request: URLRequest) -> Bool {
+    return true
+  }
 
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
+  override class func canonicalRequest(for request: URLRequest) -> URLRequest {
+    return request
+  }
+
+  class override func requestIsCacheEquivalent(_ aRequest: URLRequest, to bRequest: URLRequest) -> Bool {
+    return false
+  }
+
+  final override func startLoading() {
+    guard let reqURL = request.url, let urlClient = client else {
+      return
     }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() throws {
-        // UI tests must launch the application that they test.
-        let app = XCUIApplication()
-        app.launch()
-
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testLaunchPerformance() throws {
-        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, *) {
-            // This measures how long it takes to launch your application.
-            measure(metrics: [XCTApplicationLaunchMetric()]) {
-                XCUIApplication().launch()
-            }
+    block = DispatchWorkItem(block: {
+      if self.cancelledOrComplete == false {
+        if let url = URL(string: reqURL.path) {
+          if let data = try? Data(contentsOf: url) {
+            urlClient.urlProtocol(self, didLoad: data)
+            urlClient.urlProtocolDidFinishLoading(self)
+          }
         }
+      }
+      self.cancelledOrComplete = true
+    })
+
+    ImageUrlProtocol.queue.asyncAfter(deadline: DispatchTime(uptimeNanoseconds: 500 * NSEC_PER_MSEC), execute: block)
+  }
+
+  final override func stopLoading() {
+    ImageUrlProtocol.queue.async {
+      if self.cancelledOrComplete == false, let cancelBlock = self.block {
+        cancelBlock.cancel()
+        self.cancelledOrComplete = true
+      }
     }
+  }
+
+  static func urlSession() -> URLSession {
+    let config = URLSessionConfiguration.ephemeral
+    config.protocolClasses = [ImageUrlProtocol.classForCoder()]
+    return  URLSession(configuration: config)
+  }
 }

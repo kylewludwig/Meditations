@@ -1,5 +1,5 @@
 //
-// MeditationsUITests.swift
+// ImageCache.swift
 //
 // Copyright © 2021 Ten Percent Happier. All rights reserved.
 //
@@ -37,38 +37,61 @@
 //     the implied warranties of merchantability, fitness for a particular purpose and non-infringement.
 //
 
-import XCTest
+import UIKit
+import Foundation
 
-class MeditationsUITests: XCTestCase {
+public class ImageCache {
+  
+  public static let publicCache = ImageCache()
+  
+  var placeholderImage = UIImage(named: "Rectangle")!
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+  private let cachedImages = NSCache<NSURL, UIImage>()
 
-        // In UI tests it is usually best to stop immediately when a failure occurs.
-        continueAfterFailure = false
+  private var loadingResponses = [NSURL: [(UIImage?) -> Void]]()
 
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
+  public final func image(url: NSURL) -> UIImage? {
+    return cachedImages.object(forKey: url)
+  }
+
+  // Returns the cached image if available, otherwise asynchronously loads and caches it.
+  final func load(url: NSURL, completion: @escaping (UIImage?) -> Void) {
+    // Check for a cached image.
+    if let cachedImage = image(url: url) {
+      DispatchQueue.main.async {
+        completion(cachedImage)
+      }
+      return
     }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    // In case there are more than one requestor for the image, we append their completion block.
+    if loadingResponses[url] != nil {
+      loadingResponses[url]?.append(completion)
+      return
+    } else {
+      loadingResponses[url] = [completion]
     }
 
-    func testExample() throws {
-        // UI tests must launch the application that they test.
-        let app = XCUIApplication()
-        app.launch()
-
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testLaunchPerformance() throws {
-        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, *) {
-            // This measures how long it takes to launch your application.
-            measure(metrics: [XCTApplicationLaunchMetric()]) {
-                XCUIApplication().launch()
-            }
+    // Go fetch the image.
+    ImageUrlProtocol.urlSession().dataTask(with: url as URL) { (data, _, error) in
+      // Check for the error, then data and try to create the image.
+      guard let responseData = data, let image = UIImage(data: responseData),
+            let blocks = self.loadingResponses[url], error == nil else {
+        DispatchQueue.main.async {
+          completion(nil)
         }
-    }
+        return
+      }
+
+      // Cache the image.
+      self.cachedImages.setObject(image, forKey: url, cost: responseData.count)
+      // Iterate over each requestor for the image and pass it back.
+      for block in blocks {
+        DispatchQueue.main.async {
+          block(image)
+        }
+        return
+      }
+    }.resume()
+  }
 }

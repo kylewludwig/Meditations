@@ -1,5 +1,5 @@
 //
-// MeditationsUITests.swift
+// TopicsBuilder.swift
 //
 // Copyright © 2021 Ten Percent Happier. All rights reserved.
 //
@@ -37,38 +37,71 @@
 //     the implied warranties of merchantability, fitness for a particular purpose and non-infringement.
 //
 
-import XCTest
+import Foundation.NSUUID
 
-class MeditationsUITests: XCTestCase {
+// MARK: Topics builder protocol
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+protocol TopicsBuilder {
+  var topics: [UUID: Topic] { get set }
 
-        // In UI tests it is usually best to stop immediately when a failure occurs.
-        continueAfterFailure = false
+  mutating func build(topics: [Topic], withSubtopics subtopics: [Subtopic]) throws
+  func getTopics() -> [Topic]
+}
 
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
+extension TopicsBuilder {
+
+  mutating func build(topics: [Topic], withSubtopics subtopics: [Subtopic]) throws {
+    if topics.isEmpty || subtopics.isEmpty {
+      throw DecodingError.noData
     }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
+    self.topics = topics
+      .reduce(into: [UUID: Topic]()) { $0[$1.uuid] = $1 }
+    
+    for subtopic in subtopics {
+      // Add subtopic to each topic
+      self.topics[subtopic.parentUuid]?.subtopics.append(subtopic)
 
-    func testExample() throws {
-        // UI tests must launch the application that they test.
-        let app = XCUIApplication()
-        app.launch()
-
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testLaunchPerformance() throws {
-        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, *) {
-            // This measures how long it takes to launch your application.
-            measure(metrics: [XCTApplicationLaunchMetric()]) {
-                XCUIApplication().launch()
-            }
+      // Correct Topic subtitle to include combined number of Meditations in Topic and all Subtopics
+      var totalMeditations = 0
+      if let topic = self.topics[subtopic.parentUuid] {
+        for subtopic in topic.subtopics {
+          for _ in subtopic.meditationUuids {
+            totalMeditations += 1
+          }
         }
+      }
+      totalMeditations += self.topics[subtopic.parentUuid]?.meditationUuids.count ?? 0
+      self.topics[subtopic.parentUuid]?.subtitle = String(format: "%d Meditations", totalMeditations)
     }
+  }
+
+  func getTopics() -> [Topic] {
+    return self.topics.enumerated()
+      .map { _, entry in return entry.value }
+      .filter({ $0.featured })
+      .sorted(by: { $0.position < $1.position })
+  }
+}
+
+// MARK: Featured topics builder
+
+class FeaturedTopicsBuilder: TopicsBuilder {
+  var topics: [UUID: Topic] = [:]
+
+  init() { }
+}
+
+// MARK: Topics director
+
+class TopicsDirector {
+  private var builder: TopicsBuilder?
+
+  init(withBuilder builder: TopicsBuilder) {
+    self.builder = builder
+  }
+
+  func construct(topics: [Topic], withSubtopics subtopics: [Subtopic]) {
+    try? builder?.build(topics: topics, withSubtopics: subtopics)
+  }
 }

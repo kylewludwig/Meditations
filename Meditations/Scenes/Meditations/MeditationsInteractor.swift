@@ -1,5 +1,5 @@
 //
-// MeditationsUITests.swift
+// MeditationsInteractor.swift
 //
 // Copyright © 2021 Ten Percent Happier. All rights reserved.
 //
@@ -37,38 +37,69 @@
 //     the implied warranties of merchantability, fitness for a particular purpose and non-infringement.
 //
 
-import XCTest
+import UIKit
 
-class MeditationsUITests: XCTestCase {
+protocol MeditationsBusinessLogic {
+  func fetchMeditations(request: Meditations.FetchMeditations.Request)
+}
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+protocol MeditationsDataStore {
+  var topic: Topic! { get set }
+  var topicIndex: Int! { get set }
+}
 
-        // In UI tests it is usually best to stop immediately when a failure occurs.
-        continueAfterFailure = false
+class MeditationsInteractor: MeditationsBusinessLogic, MeditationsDataStore {
 
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
-    }
+  var presenter: MeditationsPresentationLogic?
+  
+  var topic: Topic!
+  var topicIndex: Int!
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
+  private let cache = ImageCache.publicCache
+  private let meditationTopicsWorker = MeditationTopicsWorker()
+  
+  // MARK: Business logic
+  
+  func fetchMeditations(request: Meditations.FetchMeditations.Request) {
 
-    func testExample() throws {
-        // UI tests must launch the application that they test.
-        let app = XCUIApplication()
-        app.launch()
-
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testLaunchPerformance() throws {
-        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, *) {
-            // This measures how long it takes to launch your application.
-            measure(metrics: [XCTApplicationLaunchMetric()]) {
-                XCUIApplication().launch()
-            }
+    meditationTopicsWorker.fetchMeditations { result in
+      switch result {
+      case .failure(let error):
+        DispatchQueue.main.async { [unowned self] in
+          self.presenter?.presentFailureAlert("Deep breath, it's just an error.",
+                                              message: error.localizedDescription)
         }
+      case .success(let meditations):
+        self.update(topic: &self.topic, with: meditations)
+
+        DispatchQueue.main.async { [unowned self] in
+          let response = Meditations.FetchMeditations.Response(topic: self.topic)
+          self.presenter?.presentFetchedMeditations(response: response)
+        }
+      }
     }
+  }
+
+  // MARK: Helper functions
+
+  private func update(topic: inout Topic, with meditations: [Meditation]) {
+    let medititations = meditations
+      .reduce(into: [UUID: Meditation]()) { $0[$1.uuid] = $1 }
+    
+    // Add Meditations to Subtopics
+    for (subtopicIndex, subtopic) in topic.subtopics.enumerated() {
+      for meditationUuid in subtopic.meditationUuids {
+        if let meditation = medititations[meditationUuid] {
+          topic.subtopics[subtopicIndex].meditations.append(meditation)
+        }
+      }
+    }
+
+    // Add Meditations to Topic
+    for meditationUuid in topic.meditationUuids {
+      if let meditation = medititations[meditationUuid] {
+        topic.meditations.append(meditation)
+      }
+    }
+  }
 }

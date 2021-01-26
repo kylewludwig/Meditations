@@ -1,5 +1,5 @@
 //
-// MeditationsUITests.swift
+// TopicsInteractor.swift
 //
 // Copyright © 2021 Ten Percent Happier. All rights reserved.
 //
@@ -37,38 +37,41 @@
 //     the implied warranties of merchantability, fitness for a particular purpose and non-infringement.
 //
 
-import XCTest
+import UIKit
 
-class MeditationsUITests: XCTestCase {
+protocol TopicsBusinessLogic {
+  func fetchTopics(request: Topics.FetchTopics.Request)
+}
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+protocol TopicsDataStore {
+  var topics: [Topic]? { get set }
+}
 
-        // In UI tests it is usually best to stop immediately when a failure occurs.
-        continueAfterFailure = false
+class TopicsInteractor: TopicsBusinessLogic, TopicsDataStore {
+  
+  var presenter: TopicsPresentationLogic?
+  var topics: [Topic]?
 
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() throws {
-        // UI tests must launch the application that they test.
-        let app = XCUIApplication()
-        app.launch()
-
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testLaunchPerformance() throws {
-        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, *) {
-            // This measures how long it takes to launch your application.
-            measure(metrics: [XCTApplicationLaunchMetric()]) {
-                XCUIApplication().launch()
-            }
+  private let meditationTopicsWorker = MeditationTopicsWorker()
+  
+  // MARK: Business logic
+  
+  func fetchTopics(request: Topics.FetchTopics.Request) {
+    meditationTopicsWorker.fetchTopics { result in
+      switch result {
+      case .failure(let error):
+        DispatchQueue.main.async {
+          self.presenter?.presentFailureAlert("Deep breath, it's just an error.",
+                                              message: error.localizedDescription)
         }
+      case .success(let topics):
+        self.topics = topics
+        
+        DispatchQueue.main.async {
+          let response = Topics.FetchTopics.Response(topics: topics)
+          self.presenter?.presentFetchedTopics(response: response)
+        }
+      }
     }
+  }
 }

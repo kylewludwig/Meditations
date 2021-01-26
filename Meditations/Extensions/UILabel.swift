@@ -1,5 +1,5 @@
 //
-// MeditationsUITests.swift
+// UILabel.swift
 //
 // Copyright © 2021 Ten Percent Happier. All rights reserved.
 //
@@ -37,38 +37,32 @@
 //     the implied warranties of merchantability, fitness for a particular purpose and non-infringement.
 //
 
-import XCTest
+import UIKit.UILabel
 
-class MeditationsUITests: XCTestCase {
+// MARK: Inset label
+// Credit: https://chrishannah.me/adding-insets-to-a-uilabel/
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+class InsetLabel: UILabel {
 
-        // In UI tests it is usually best to stop immediately when a failure occurs.
-        continueAfterFailure = false
+  var contentInsets = UIEdgeInsets.zero
 
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
-    }
+  override func drawText(in rect: CGRect) {
+    let insetRect = rect.inset(by: contentInsets)
+    super.drawText(in: insetRect)
+  }
+  
+  override var intrinsicContentSize: CGSize {
+    return addInsets(to: super.intrinsicContentSize)
+  }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
+  override func sizeThatFits(_ size: CGSize) -> CGSize {
+    return addInsets(to: super.sizeThatFits(size))
+  }
 
-    func testExample() throws {
-        // UI tests must launch the application that they test.
-        let app = XCUIApplication()
-        app.launch()
+  private func addInsets(to size: CGSize) -> CGSize {
+    let width = size.width + contentInsets.left + contentInsets.right
+    let height = size.height + contentInsets.top + contentInsets.bottom
+    return CGSize(width: width, height: height)
+  }
 
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testLaunchPerformance() throws {
-        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, *) {
-            // This measures how long it takes to launch your application.
-            measure(metrics: [XCTApplicationLaunchMetric()]) {
-                XCUIApplication().launch()
-            }
-        }
-    }
 }

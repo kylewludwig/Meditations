@@ -1,5 +1,5 @@
 //
-// MeditationsUITests.swift
+// HttpService.swift
 //
 // Copyright © 2021 Ten Percent Happier. All rights reserved.
 //
@@ -37,38 +37,38 @@
 //     the implied warranties of merchantability, fitness for a particular purpose and non-infringement.
 //
 
-import XCTest
+import Foundation
 
-class MeditationsUITests: XCTestCase {
+class HttpService {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+  typealias GenericResult<T> = (Result<T, Error>) -> Void
+  
+  static func download<T: Decodable>(type: T.Type, from url: URL, completion: @escaping GenericResult<T>) {
 
-        // In UI tests it is usually best to stop immediately when a failure occurs.
-        continueAfterFailure = false
+    URLSession.shared.dataTask(with: url) { (data, response, error) in
+      if let error = error {
+        completion(.failure(error))
+      }
 
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
-    }
+      guard let response = response as? HTTPURLResponse else {
+        completion(.failure(NetworkingError.invalidResponse))
+        return
+      }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() throws {
-        // UI tests must launch the application that they test.
-        let app = XCUIApplication()
-        app.launch()
-
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testLaunchPerformance() throws {
-        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, *) {
-            // This measures how long it takes to launch your application.
-            measure(metrics: [XCTApplicationLaunchMetric()]) {
-                XCUIApplication().launch()
-            }
+      if 200 ... 299 ~= response.statusCode {
+        if let data = data {
+          do {
+            let decodedData = try JSONDecoder().decode(T.self, from: data)
+            completion(.success(decodedData))
+          } catch {
+            completion(.failure(DecodingError.dataFormatUnsupported))
+          }
+        } else {
+          completion(.failure(DecodingError.invalidData))
         }
-    }
+      } else {
+        completion(.failure(NetworkingError.invalidResponseCode))
+      }
+    }.resume()
+  }
 }
