@@ -7,9 +7,9 @@ Unofficial clone of the Ten Percent Happier for iOS. Follows Raymond Law's Clean
 - Image caching
 
 ### Getting Started
-1. `git clone git clone https://github.com/kylewludwig/meditations` to copy the repository via HTTPS.
+1. `git clone https://github.com/kylewludwig/Meditations.git` to copy the repository via HTTPS.
 2. `cd Meditations` to move into the root directory.
-3. `brew install` to install [SwiftLint](https://github.com/realm/SwiftLint) with [Homebrew](https://brew.sh/).
+3. `brew install swiftlint` to install [SwiftLint](https://github.com/realm/SwiftLint) with [Homebrew](https://brew.sh/).
 4. `open -a Xcode Meditations.xcodeproj` to open the app in XCode.
 5. Choose a target device and press ▶️ on the top-left corner of XCode to run the application.
 
