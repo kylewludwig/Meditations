@@ -54,20 +54,4 @@ enum Meditations {
       let topic: Topic
     }
   }
-  
-  enum LoadImage {
-    struct Request { }
-
-    struct Response {
-      let indexPath: IndexPath
-      let meditation: Meditation
-      let image: UIImage?
-    }
-
-    struct ViewModel {
-      let indexPath: IndexPath
-      let meditation: Meditation
-      let image: UIImage?
-    }
-  }
 }
