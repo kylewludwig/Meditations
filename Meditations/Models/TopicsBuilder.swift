@@ -41,14 +41,14 @@ import Foundation.NSUUID
 
 // MARK: Topics builder protocol
 
-protocol TopicsBuilder {
+public protocol TopicsBuilder {
   var topics: [UUID: Topic] { get set }
 
   mutating func build(topics: [Topic], withSubtopics subtopics: [Subtopic]) throws
   func getTopics() -> [Topic]
 }
 
-extension TopicsBuilder {
+public extension TopicsBuilder {
 
   mutating func build(topics: [Topic], withSubtopics subtopics: [Subtopic]) throws {
     if topics.isEmpty || subtopics.isEmpty {

@@ -41,7 +41,7 @@ import Foundation.NSUUID
 
 // MARK: Subtopic
 
-struct Subtopic {
+public struct Subtopic {
   var uuid: UUID
   var title: String
   var parentUuid: UUID
@@ -65,7 +65,7 @@ extension Subtopic: Decodable {
     case uuidString = "uuid"
   }
   
-  init(from decoder: Decoder) throws {
+  public init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
     _ = try? container.decode(String.self, forKey: CodingKeys.hexColorString)
     _ = try? container.decode(String.self, forKey: CodingKeys.description)
@@ -79,11 +79,7 @@ extension Subtopic: Decodable {
     _ = try? container.decode(String.self, forKey: CodingKeys.thumbnailUrlString)
     let uuidString = try container.decode(String.self, forKey: CodingKeys.uuidString)
 
-    guard parentUuidString != nil else {
-      // Subtopics must have a parent UUID
-      throw DecodingError.invalidSubtopic
-    }
-    guard let parentUuid = UUID(uuidString: parentUuidString!) else {
+    guard parentUuidString != nil, let parentUuid = UUID(uuidString: parentUuidString!) else {
       throw DecodingError.invalidParentUuid
     }
     guard let uuid = UUID(uuidString: uuidString) else {

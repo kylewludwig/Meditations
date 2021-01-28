@@ -39,11 +39,11 @@
 
 import Foundation
 
-class HttpService {
+public class HttpService {
 
-  typealias GenericResult<T> = (Result<T, Error>) -> Void
+  public typealias GenericResult<T> = (Result<T, Error>) -> Void
   
-  static func download<T: Decodable>(type: T.Type, from url: URL, completion: @escaping GenericResult<T>) {
+  public static func download<T: Decodable>(type: T.Type, from url: URL, completion: @escaping GenericResult<T>) {
 
     URLSession.shared.dataTask(with: url) { (data, response, error) in
       if let error = error {
@@ -64,7 +64,7 @@ class HttpService {
             completion(.failure(DecodingError.dataFormatUnsupported))
           }
         } else {
-          completion(.failure(DecodingError.invalidData))
+          completion(.failure(DecodingError.noData))
         }
       } else {
         completion(.failure(NetworkingError.invalidResponseCode))

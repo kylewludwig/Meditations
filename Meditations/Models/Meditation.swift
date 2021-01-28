@@ -39,7 +39,7 @@
 
 import UIKit.UIImage
 
-struct Meditation {
+public struct Meditation {
   let uuid: UUID
   let title: String
   let teacherName: String
@@ -71,7 +71,7 @@ extension Meditation: Decodable {
     case uuidString = "uuid"
   }
 
-  init(from decoder: Decoder) throws {
+  public init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
     _ = try? container.decode(String.self, forKey: CodingKeys.backgroundImageUrlString)
     _ = try container.decode(String.self, forKey: CodingKeys.description)

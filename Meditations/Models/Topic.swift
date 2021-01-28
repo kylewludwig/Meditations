@@ -41,7 +41,7 @@ import UIKit.UIColor
 
 // MARK: Topic
 
-struct Topic {
+public struct Topic {
   var uuid: UUID
   var title: String
   var subtitle: String
@@ -70,7 +70,7 @@ extension Topic: Decodable {
     case uuidString = "uuid"
   }
 
-  init(from decoder: Decoder) throws {
+  public init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
     let hexColorString = try? container.decode(String.self, forKey: CodingKeys.hexColorString)
     let description = try container.decode(String.self, forKey: CodingKeys.description)
@@ -86,7 +86,7 @@ extension Topic: Decodable {
 
     guard parentUuuidString == nil else {
       // Topics must not have a parent UUID
-      throw DecodingError.invalidTopic
+      throw DecodingError.invalidParentUuid
     }
     guard let uuid = UUID(uuidString: uuidString) else {
       throw DecodingError.invalidUuid
@@ -105,7 +105,7 @@ extension Topic: Decodable {
 
 // MARK: Featured Topics
 
-struct FeaturedTopics {
+public struct FeaturedTopics {
   let topics: [Topic]
 }
 
@@ -115,7 +115,7 @@ extension FeaturedTopics: Decodable {
     case topics
   }
 
-  init(from decoder: Decoder) throws {
+  public init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
     guard let topics = try? container.decode([FailableDecodable<Topic>].self, forKey: CodingKeys.topics) else {
       throw DecodingError.invalidTopic

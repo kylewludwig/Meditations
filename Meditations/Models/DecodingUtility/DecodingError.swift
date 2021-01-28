@@ -37,7 +37,7 @@
 //     the implied warranties of merchantability, fitness for a particular purpose and non-infringement.
 //
 
-enum DecodingError: Error {
+public enum DecodingError: Error {
   case invalidTopic
   case invalidSubtopic
   case invalidUuid
@@ -45,5 +45,4 @@ enum DecodingError: Error {
   case noData
   case dataFormatUnsupported
   case failedToLoadImage
-  case invalidData
 }
