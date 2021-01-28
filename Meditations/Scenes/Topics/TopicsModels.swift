@@ -54,12 +54,4 @@ enum Topics {
       let topics: [Topic]
     }
   }
-
-  enum ShowMeditations {
-    struct Request { }
-
-    struct Response { }
-
-    struct ViewModel { }
-  }
 }
